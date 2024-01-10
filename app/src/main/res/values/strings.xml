@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GithubRepoViewer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name: </string>
+    <string name="github_repo_viewer">GithubRepoViewer</string>
+    <string name="mohamed_adel">Mohamed Adel</string>
+    <string name="description">Description: </string>
+    <string name="grit_is_no_longer_maintained_check_out_libgit2_rugged_grit_gives_you_object_oriented_read_write_access_to_git_repositories_via_ruby">**Grit is no longer maintained. Check out libgit2/rugged.** Grit gives you object oriented read/write access to Git repositories via Ruby.</string>
+    <string name="stars_count">Stars Count: </string>
+    <string name="owner">Owner: </string>
+    <string name="show_star_count"><u>Show Star Count</u></string>
+    <string name="_651">651</string>
+    <string name="repositories">Repositories</string>
+</resources>
