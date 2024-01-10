@@ -2,12 +2,12 @@ package com.example.githubrepoviewer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.githubrepoviewer.databinding.ActivityMainBinding
 import com.example.githubrepoviewer.utils.NetworkConnectivityObserver
 import com.example.githubrepoviewer.utils.Status
 import com.example.githubrepoviewer.utils.collectLatestLifeCycleFlow
-import com.example.githubrepoviewer.utils.visibleIf
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import javax.inject.Inject
@@ -29,7 +29,8 @@ class MainActivity : AppCompatActivity() {
     private fun observeNetworkState() {
         collectLatestLifeCycleFlow(networkConnectivityObserver.observe()){
             delay(200)
-            binding.noConnectionAnimation visibleIf (it == Status.Lost || it == Status.Unavailable)
+            if (it == Status.Lost || it == Status.Unavailable)
+                Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT).show()
         }
     }
 }

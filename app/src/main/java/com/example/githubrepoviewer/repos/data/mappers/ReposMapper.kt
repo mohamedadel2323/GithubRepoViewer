@@ -9,7 +9,7 @@ fun ReposResponseItem.toRepoModel(): RepoModel =
         id = this.id ?: 0,
         repoName = this.name ?: "",
         repoOwner = owner?.login ?: "",
-        description = this.description ?: ""
+        description = this.description ?: "",
     )
 
 fun ReposResponseItem.toRepoEntity(): RepoEntity =
@@ -24,5 +24,6 @@ fun RepoEntity.toRepoModel(): RepoModel = RepoModel(
     id = this.id,
     repoName = this.repoName,
     repoOwner = repoOwner,
-    description = this.description
+    description = this.description,
+    starCount = starCount
 )

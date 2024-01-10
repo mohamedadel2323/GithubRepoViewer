@@ -38,7 +38,7 @@ class ReposFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = findNavController()
         reposAdapter = ReposAdapter {
-            Toast.makeText(requireContext(), it.repoName, Toast.LENGTH_SHORT).show()
+            reposViewModel.updateRepo(it.repoOwner, it.repoName)
         }
         setReposRecycler()
         observeScreenState()
@@ -63,8 +63,6 @@ class ReposFragment : Fragment() {
                 Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                 reposViewModel.errorMessageShown()
             }
-
-
         }
     }
 

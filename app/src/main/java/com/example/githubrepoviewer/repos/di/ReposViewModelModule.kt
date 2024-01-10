@@ -1,5 +1,7 @@
 package com.example.githubrepoviewer.repos.di
 
+import com.example.githubrepoviewer.data.remote.details.RepoDetailsApiClient
+import com.example.githubrepoviewer.data.remote.details.RepoDetailsRemoteSource
 import com.example.githubrepoviewer.repos.data.local.ConcreteReposLocalSource
 import com.example.githubrepoviewer.repos.data.local.ReposLocalSource
 import com.example.githubrepoviewer.repos.data.remote.ReposApiClient
@@ -21,6 +23,10 @@ abstract class ReposViewModelModule {
     @Binds
     @ViewModelScoped
     abstract fun bindReposRemoteSource(reposApiClient: ReposApiClient): ReposRemoteSource
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindReposDetailsRemoteSource(reposDetailsApiClient: RepoDetailsApiClient): RepoDetailsRemoteSource
 
     @Binds
     @ViewModelScoped

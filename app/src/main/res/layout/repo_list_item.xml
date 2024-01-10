@@ -8,6 +8,7 @@
         <variable
             name="repoModel"
             type="com.example.githubrepoviewer.repos.presentation.models.RepoUiModel" />
+
         <variable
             name="reposViewModel"
             type="com.example.githubrepoviewer.repos.presentation.ReposViewModel" />
@@ -118,24 +119,24 @@
                 android:layout_marginTop="@dimen/_5ssp"
                 android:text="@string/stars_count"
                 android:textColor="@color/black"
-                app:visibleIf="@{repoModel.starCount}"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintEnd_toStartOf="@id/starsCountValue"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="@id/repoName"
-                app:layout_constraintTop_toBottomOf="@id/repoDescription" />
+                app:layout_constraintTop_toBottomOf="@id/repoDescription"
+                app:visibleIf="@{repoModel.starCount}" />
 
             <TextView
                 android:id="@+id/starsCountValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:count="@{repoModel.starCount}"
                 android:textColor="#FFC107"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
                 android:visibility="gone"
+                app:count="@{repoModel.starCount}"
                 app:layout_constraintBottom_toBottomOf="@id/starsCount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/starsCount"
@@ -147,12 +148,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5ssp"
-                android:textColor="#008EFF"
                 android:text="@string/show_star_count"
+                android:textColor="#008EFF"
                 android:textSize="@dimen/_10ssp"
+                app:hideIf="@{repoModel.starCount}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/repoDescription"/>
+                app:layout_constraintTop_toBottomOf="@id/repoDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

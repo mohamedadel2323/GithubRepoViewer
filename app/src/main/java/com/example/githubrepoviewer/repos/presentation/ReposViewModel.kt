@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,13 +37,16 @@ class ReposViewModel @Inject constructor(
             reposUseCase.getAllRepos().also { reposResource ->
                 when (reposResource) {
                     is Resource.Success -> {
-                        reposResource.data?.let { repos ->
-                            _reposState.update {
-                                it.copy(
-                                    repos = repos.map { repoModel -> repoModel.toRepoUiModel() },
-                                    isReposLoading = false
-                                )
+                        reposResource.data?.let { reposFlow ->
+                            reposFlow.collectLatest { repos ->
+                                _reposState.update {
+                                    it.copy(
+                                        repos = repos.map { repoModel -> repoModel.toRepoUiModel() },
+                                        isReposLoading = false
+                                    )
+                                }
                             }
+
                         }
                     }
 
@@ -58,6 +62,12 @@ class ReposViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun updateRepo(owner: String, repoName: String) {
+        viewModelScope.launch(ioDispatcher) {
+            reposUseCase.getDetails(owner, repoName)
         }
     }
 

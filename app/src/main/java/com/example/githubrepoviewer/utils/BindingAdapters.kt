@@ -15,3 +15,8 @@ fun setStarsCount(textView: TextView, starCount:Int?){
 fun showIfThereIsValue(textView: TextView, starCount:Int?){
     textView visibleIf (starCount != null)
 }
+
+@BindingAdapter("hideIf")
+fun hideIfThereIsValue(textView: TextView, starCount:Int?){
+    textView visibleIf (starCount == null)
+}
