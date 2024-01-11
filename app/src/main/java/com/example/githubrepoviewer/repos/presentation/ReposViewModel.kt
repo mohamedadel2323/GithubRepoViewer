@@ -67,7 +67,25 @@ class ReposViewModel @Inject constructor(
 
     fun updateRepo(owner: String, repoName: String) {
         viewModelScope.launch(ioDispatcher) {
-            reposUseCase.getDetails(owner, repoName)
+            _reposState.update { it.copy(isReposLoading = true) }
+            when (val result = reposUseCase.getDetails(owner, repoName)) {
+                is Resource.Success -> {
+                    _reposState.update {
+                        it.copy(
+                            isReposLoading = false
+                        )
+                    }
+                }
+
+                is Resource.Failure -> {
+                    _reposState.update {
+                        it.copy(
+                            errorMessage = result.error.toString(),
+                            isReposLoading = false
+                        )
+                    }
+                }
+            }
         }
     }
 

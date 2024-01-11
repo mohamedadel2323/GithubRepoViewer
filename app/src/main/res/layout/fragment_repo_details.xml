@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="repoDetails"
+            type="com.example.githubrepoviewer.details.presentation.models.RepoDetailsUiModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".details.presentation.RepoDetailsFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_16ssp">
+
+            <TextView
+                android:id="@+id/repoName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5ssp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@{repoDetails.repoName}"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_25ssp"
+                app:layout_constraintBottom_toTopOf="@id/descriptionValue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Github Repository Viewer" />
+
+            <TextView
+                android:id="@+id/descriptionValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20ssp"
+                android:layout_marginBottom="@dimen/_20ssp"
+                android:text="@{repoDetails.description}"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toTopOf="@id/detailsCv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/repoName"
+                tools:ignore="RtlSymmetry"
+                tools:text="@string/grit_is_no_longer_maintained_check_out_libgit2_rugged_grit_gives_you_object_oriented_read_write_access_to_git_repositories_via_ruby" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/detailsCv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5ssp"
+                android:elevation="@dimen/_10ssp"
+                app:cardCornerRadius="@dimen/_5ssp"
+                app:layout_constraintBottom_toTopOf="@+id/issuesBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionValue">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_20ssp">
+
+                    <TextView
+                        android:id="@+id/ownerName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/owner"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/ownerNameValue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/ownerNameValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{repoDetails.repoOwner}"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/ownerName"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ownerName"
+                        app:layout_constraintTop_toTopOf="@id/ownerName"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="@string/mohamed_adel" />
+
+                    <TextView
+                        android:id="@+id/languageTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:text="@string/language"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/languageValue"
+                        app:layout_constraintStart_toStartOf="@id/ownerName"
+                        app:layout_constraintTop_toBottomOf="@id/ownerName" />
+
+                    <TextView
+                        android:id="@+id/languageValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{repoDetails.language}"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/languageTv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/languageTv"
+                        app:layout_constraintTop_toTopOf="@id/languageTv"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="Kotlin" />
+
+                    <TextView
+                        android:id="@+id/starCountTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:text="@string/stars_count"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/languageValue"
+                        app:layout_constraintStart_toStartOf="@id/ownerName"
+                        app:layout_constraintTop_toBottomOf="@id/languageTv" />
+
+                    <TextView
+                        android:id="@+id/starCountValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf(repoDetails.starCount)}"
+                        android:textAlignment="center"
+                        android:textColor="#FFC107"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/starCountTv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/starCountTv"
+                        app:layout_constraintTop_toTopOf="@id/starCountTv"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="62" />
+
+                    <TextView
+                        android:id="@+id/watchersTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:text="@string/repo_watchers"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/languageValue"
+                        app:layout_constraintStart_toStartOf="@id/ownerName"
+                        app:layout_constraintTop_toBottomOf="@id/starCountTv" />
+
+                    <TextView
+                        android:id="@+id/watchersValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf(repoDetails.repoWatchers)}"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/watchersTv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/watchersTv"
+                        app:layout_constraintTop_toTopOf="@id/watchersTv"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="629" />
+
+                    <TextView
+                        android:id="@+id/forkCountTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:text="@string/fork_count"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/languageValue"
+                        app:layout_constraintStart_toStartOf="@id/ownerName"
+                        app:layout_constraintTop_toBottomOf="@id/watchersTv" />
+
+                    <TextView
+                        android:id="@+id/forkCountValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf(repoDetails.forkCount)}"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/forkCountTv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/forkCountTv"
+                        app:layout_constraintTop_toTopOf="@id/forkCountTv"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="516" />
+
+                    <TextView
+                        android:id="@+id/openIssuesTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5ssp"
+                        android:text="@string/open_issues"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/languageValue"
+                        app:layout_constraintStart_toStartOf="@id/ownerName"
+                        app:layout_constraintTop_toBottomOf="@id/forkCountTv" />
+
+                    <TextView
+                        android:id="@+id/openIssuesValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/red"
+                        android:text="@{String.valueOf(repoDetails.openIssuesCount)}"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/_12ssp"
+                        app:layout_constraintBottom_toBottomOf="@id/openIssuesTv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/openIssuesTv"
+                        app:layout_constraintTop_toTopOf="@id/openIssuesTv"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="65" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/issuesBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20ssp"
+                android:backgroundTint="@color/red"
+                android:text="@string/issues"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailsCv" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_5ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</layout>

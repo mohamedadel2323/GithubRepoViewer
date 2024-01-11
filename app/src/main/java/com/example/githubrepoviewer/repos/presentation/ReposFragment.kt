@@ -20,12 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ReposFragment : Fragment() {
     private var _binding: FragmentReposBinding? = null
-
     private val binding get() = _binding!!
     private val reposViewModel by viewModels<ReposViewModel>()
     private lateinit var navController: NavController
     private lateinit var reposAdapter: ReposAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,9 +35,14 @@ class ReposFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         navController = findNavController()
-        reposAdapter = ReposAdapter {
-            reposViewModel.updateRepo(it.repoOwner, it.repoName)
-        }
+        reposAdapter = ReposAdapter(
+            {
+                navController.navigate(ReposFragmentDirections.actionReposFragmentToRepoDetailsFragment(it.repoOwner, it.repoName))
+            },
+            { repo ->
+                reposViewModel.updateRepo(repo.repoOwner, repo.repoName)
+            }
+        )
         setReposRecycler()
         observeScreenState()
     }
@@ -59,7 +62,7 @@ class ReposFragment : Fragment() {
                 reposAdapter.submitList(it.repos)
             }
             binding.progressBar visibleIf it.isReposLoading
-            if (it.errorMessage.isNotEmpty()){
+            if (it.errorMessage.isNotEmpty()) {
                 Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                 reposViewModel.errorMessageShown()
             }

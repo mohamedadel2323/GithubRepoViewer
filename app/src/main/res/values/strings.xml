@@ -12,4 +12,9 @@
     <string name="show_star_count"><u>Show Star Count</u></string>
     <string name="_651">651</string>
     <string name="repositories">Repositories</string>
+    <string name="language">Language:</string>
+    <string name="repo_watchers">Repo Watchers:</string>
+    <string name="fork_count">Fork Count:</string>
+    <string name="open_issues">Open Issues:</string>
+    <string name="issues">Issues</string>
 </resources>

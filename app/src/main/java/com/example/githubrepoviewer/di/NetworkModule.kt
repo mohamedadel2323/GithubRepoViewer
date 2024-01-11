@@ -4,7 +4,10 @@ import android.content.Context
 import com.example.githubrepoviewer.BuildConfig
 import com.example.githubrepoviewer.data.remote.ApiServiceManager
 import com.example.githubrepoviewer.data.remote.GithubApiService
+import com.example.githubrepoviewer.data.remote.details.RepoDetailsApiClient
+import com.example.githubrepoviewer.data.remote.details.RepoDetailsRemoteSource
 import com.example.githubrepoviewer.utils.NetworkConnectivityObserver
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,32 +21,39 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object NetworkModule {
-    @Provides
+abstract class NetworkModule {
+    @Binds
     @Singleton
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
+    abstract fun bindReposDetailsRemoteSource(reposDetailsApiClient: RepoDetailsApiClient): RepoDetailsRemoteSource
 
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
-        OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
+    companion object{
+        @Provides
+        @Singleton
+        fun provideLoggingInterceptor(): HttpLoggingInterceptor =
+            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
 
-    @Provides
-    @Singleton
-    fun provideRetrofitBuilder(okHttpClient: OkHttpClient): Retrofit.Builder =
-        Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
+        @Provides
+        @Singleton
+        fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+            OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
 
-    @Provides
-    @Singleton
-    fun provideGithubApi(builder: Retrofit.Builder): GithubApiService =
-        ApiServiceManager(builder).provideService(
-            service = GithubApiService::class.java,
-            baseUrl = BuildConfig.GIT_HUB_BASE_URL
-        )
+        @Provides
+        @Singleton
+        fun provideRetrofitBuilder(okHttpClient: OkHttpClient): Retrofit.Builder =
+            Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
 
-    @Provides
-    @Singleton
-    fun provideConnectivityObserver(@ApplicationContext context: Context): NetworkConnectivityObserver =
-        NetworkConnectivityObserver(context = context)
+        @Provides
+        @Singleton
+        fun provideGithubApi(builder: Retrofit.Builder): GithubApiService =
+            ApiServiceManager(builder).provideService(
+                service = GithubApiService::class.java,
+                baseUrl = BuildConfig.GIT_HUB_BASE_URL
+            )
+
+        @Provides
+        @Singleton
+        fun provideConnectivityObserver(@ApplicationContext context: Context): NetworkConnectivityObserver =
+            NetworkConnectivityObserver(context = context)
+    }
+
 }

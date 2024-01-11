@@ -9,5 +9,21 @@
         android:id="@+id/reposFragment"
         android:name="com.example.githubrepoviewer.repos.presentation.ReposFragment"
         android:label="ReposFragment"
-        tools:layout="@layout/fragment_repos"/>
+        tools:layout="@layout/fragment_repos">
+        <action
+            android:id="@+id/action_reposFragment_to_repoDetailsFragment"
+            app:destination="@id/repoDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/repoDetailsFragment"
+        android:name="com.example.githubrepoviewer.details.presentation.RepoDetailsFragment"
+        android:label="RepoDetailsFragment"
+        tools:layout="@layout/fragment_repo_details">
+        <argument
+            android:name="ownerName"
+            app:argType="string" />
+        <argument
+            android:name="repoName"
+            app:argType="string" />
+    </fragment>
 </navigation>

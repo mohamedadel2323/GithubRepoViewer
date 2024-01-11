@@ -1,7 +1,6 @@
 package com.example.githubrepoviewer.repos.data.repository
 
 import com.example.githubrepoviewer.data.remote.details.RepoDetailsRemoteSource
-import com.example.githubrepoviewer.details.data.mappers.toRepoModel
 import com.example.githubrepoviewer.repos.data.dtos.ReposResponseItem
 import com.example.githubrepoviewer.repos.data.local.ReposLocalSource
 import com.example.githubrepoviewer.repos.data.mappers.toRepoEntity
@@ -13,6 +12,7 @@ import com.example.githubrepoviewer.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import retrofit2.Response
+import timber.log.Timber
 import javax.inject.Inject
 
 class AllReposRepository @Inject constructor(
@@ -38,9 +38,12 @@ class AllReposRepository @Inject constructor(
                 val repo = repoResponse.body()?.toRepoModel() ?: RepoModel(0, "", "", "", 0)
                 if (repoResponse.isSuccessful) {
                     reposLocalSource.updateRepo(repo.id, repo.starCount ?: 0)
+                }else{
+                    return Resource.Failure("Something went wrong, reconnect and retry.")
                 }
             }
         } catch (e: Exception) {
+            Timber.e(e.message)
             return Resource.Failure("Something went wrong, reconnect and retry.")
         }
         return Resource.Success("")
