@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubrepoviewer.R
 import com.example.githubrepoviewer.databinding.FragmentReposBinding
 import com.example.githubrepoviewer.utils.collectLifeCycleFlow
@@ -40,28 +39,29 @@ class ReposFragment : Fragment() {
     private fun setReposRecycler() {
         reposAdapter = ReposAdapter(
             {
-                navController.navigate(ReposFragmentDirections.actionReposFragmentToRepoDetailsFragment(it.repoOwner, it.repoName))
+                navController.navigate(
+                    ReposFragmentDirections.actionReposFragmentToRepoDetailsFragment(
+                        it.repoOwner,
+                        it.repoName
+                    )
+                )
             },
             { repo ->
                 reposViewModel.updateRepo(repo.repoOwner, repo.repoName)
             }
         )
-        val reposLayoutManager = LinearLayoutManager(requireContext())
-        reposLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        binding.reposRv.apply {
-            layoutManager = reposLayoutManager
-            adapter = reposAdapter
-        }
+        binding.reposRv.adapter = reposAdapter.withLoadStateFooter(ReposLoadStateAdapter())
     }
 
     private fun observeScreenState() {
-        collectLifeCycleFlow(reposViewModel.reposState) {
-            if (it.repos.isNotEmpty()) {
-                reposAdapter.submitList(it.repos)
+        collectLifeCycleFlow(reposViewModel.reposState) { reposScreenState ->
+            reposScreenState.repos?.let {
+                reposAdapter.submitData(reposScreenState.repos)
             }
-            binding.progressBar visibleIf it.isReposLoading
-            if (it.errorMessage.isNotEmpty()) {
-                Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+            binding.progressBar visibleIf reposScreenState.isReposLoading
+            if (reposScreenState.errorMessage.isNotEmpty()) {
+                Toast.makeText(requireContext(), reposScreenState.errorMessage, Toast.LENGTH_SHORT)
+                    .show()
                 reposViewModel.errorMessageShown()
             }
         }

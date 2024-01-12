@@ -43,6 +43,7 @@
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:elevation="@dimen/_5ssp"
             app:layout_constraintBottom_toBottomOf="parent"

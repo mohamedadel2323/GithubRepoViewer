@@ -3,8 +3,8 @@
     import android.content.Context
     import android.view.LayoutInflater
     import android.view.ViewGroup
+    import androidx.paging.PagingDataAdapter
     import androidx.recyclerview.widget.DiffUtil
-    import androidx.recyclerview.widget.ListAdapter
     import androidx.recyclerview.widget.RecyclerView
     import com.example.githubrepoviewer.databinding.RepoListItemBinding
     import com.example.githubrepoviewer.repos.presentation.models.RepoUiModel
@@ -12,7 +12,7 @@
     class ReposAdapter(
         private val selectRepo: (RepoUiModel) -> Unit,
         private val showStars: (RepoUiModel) -> Unit
-    ) : ListAdapter<RepoUiModel, ReposAdapter.RepoViewHolder>(RecyclerDiffUtilRepoUiModel()) {
+    ) : PagingDataAdapter<RepoUiModel, ReposAdapter.RepoViewHolder>(RecyclerDiffUtilRepoUiModel()) {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
             val inflater: LayoutInflater =
@@ -23,8 +23,9 @@
 
 
         override fun onBindViewHolder(holder: RepoViewHolder, position: Int) {
-            val currentItem = getItem(position)
-            holder.onBind(currentItem)
+            getItem(position)?.let {
+                holder.onBind(it)
+            }
         }
 
         inner class RepoViewHolder(private val binding: RepoListItemBinding) :
