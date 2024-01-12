@@ -12,9 +12,14 @@
     <string name="show_star_count"><u>Show Star Count</u></string>
     <string name="_651">651</string>
     <string name="repositories">Repositories</string>
-    <string name="language">Language:</string>
-    <string name="repo_watchers">Repo Watchers:</string>
-    <string name="fork_count">Fork Count:</string>
-    <string name="open_issues">Open Issues:</string>
+    <string name="language">Language: </string>
+    <string name="repo_watchers">Repo Watchers: </string>
+    <string name="fork_count">Fork Count: </string>
+    <string name="open_issues">Open Issues: </string>
     <string name="issues">Issues</string>
+    <string name="author">Author: </string>
+    <string name="creation_date">Creation Date: </string>
+    <string name="update_date">Update Date: </string>
+    <string name="closed_date">Closed Date: </string>
+    <string name="state">State: </string>
 </resources>

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubrepoviewer.R
@@ -22,7 +21,7 @@ class ReposFragment : Fragment() {
     private var _binding: FragmentReposBinding? = null
     private val binding get() = _binding!!
     private val reposViewModel by viewModels<ReposViewModel>()
-    private lateinit var navController: NavController
+    private val navController by lazy { findNavController() }
     private lateinit var reposAdapter: ReposAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +33,11 @@ class ReposFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        navController = findNavController()
+        setReposRecycler()
+        observeScreenState()
+    }
+
+    private fun setReposRecycler() {
         reposAdapter = ReposAdapter(
             {
                 navController.navigate(ReposFragmentDirections.actionReposFragmentToRepoDetailsFragment(it.repoOwner, it.repoName))
@@ -43,11 +46,6 @@ class ReposFragment : Fragment() {
                 reposViewModel.updateRepo(repo.repoOwner, repo.repoName)
             }
         )
-        setReposRecycler()
-        observeScreenState()
-    }
-
-    private fun setReposRecycler() {
         val reposLayoutManager = LinearLayoutManager(requireContext())
         reposLayoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.reposRv.apply {

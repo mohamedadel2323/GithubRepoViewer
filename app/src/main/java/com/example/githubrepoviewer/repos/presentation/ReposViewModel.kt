@@ -39,14 +39,22 @@ class ReposViewModel @Inject constructor(
                     is Resource.Success -> {
                         reposResource.data?.let { reposFlow ->
                             reposFlow.collectLatest { repos ->
-                                _reposState.update {
-                                    it.copy(
-                                        repos = repos.map { repoModel -> repoModel.toRepoUiModel() },
-                                        isReposLoading = false
-                                    )
+                                if (repos.isNotEmpty()) {
+                                    _reposState.update {
+                                        it.copy(
+                                            repos = repos.map { repoModel -> repoModel.toRepoUiModel() },
+                                            isReposLoading = false
+                                        )
+                                    }
+                                } else {
+                                    _reposState.update {
+                                        it.copy(
+                                            errorMessage = "Something went wrong, reconnect and retry.",
+                                            isReposLoading = false
+                                        )
+                                    }
                                 }
                             }
-
                         }
                     }
 

@@ -36,7 +36,9 @@ class RepoDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.issuesBtn.setOnClickListener {
+            navController.navigate(RepoDetailsFragmentDirections.actionRepoDetailsFragmentToIssuesFragment(args.ownerName, args.repoName))
+        }
         observeScreenState()
     }
 

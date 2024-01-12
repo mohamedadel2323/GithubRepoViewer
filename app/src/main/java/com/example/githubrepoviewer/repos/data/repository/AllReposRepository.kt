@@ -25,11 +25,12 @@ class AllReposRepository @Inject constructor(
         try {
             reposRemoteSource.getAllRepos().also { result ->
                 updateLocalRepos(result)
+                return Resource.Success(reposLocalSource.getAllRepos().map { repoList -> repoList.map { it.toRepoModel() } })
             }
         } catch (e: Exception) {
-            return Resource.Failure("Something went wrong, reconnect and retry.")
+            return Resource.Success(reposLocalSource.getAllRepos().map { repoList -> repoList.map { it.toRepoModel() } })
         }
-        return Resource.Success(reposLocalSource.getAllRepos().map { repoList -> repoList.map { it.toRepoModel() } })
+
     }
 
     override suspend fun getRepoDetails(owner: String, repoName: String): Resource<String> {
@@ -38,8 +39,6 @@ class AllReposRepository @Inject constructor(
                 val repo = repoResponse.body()?.toRepoModel() ?: RepoModel(0, "", "", "", 0)
                 if (repoResponse.isSuccessful) {
                     reposLocalSource.updateRepo(repo.id, repo.starCount ?: 0)
-                }else{
-                    return Resource.Failure("Something went wrong, reconnect and retry.")
                 }
             }
         } catch (e: Exception) {
