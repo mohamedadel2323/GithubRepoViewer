@@ -37,8 +37,13 @@ class IssuesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setListeners()
         setReposRecycler()
         observeScreenState()
+    }
+
+    private fun setListeners() {
+        binding.backButton.setOnClickListener { navController.navigateUp() }
     }
 
     private fun setReposRecycler() {

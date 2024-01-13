@@ -1,7 +1,7 @@
 package com.example.githubrepoviewer.repos.data.mappers
 
 import com.example.githubrepoviewer.details.data.dtos.RepoDetailsResponse
-import com.example.githubrepoviewer.repos.data.dtos.ReposResponseItem
+import com.example.githubrepoviewer.repos.data.dtos.repos.ReposResponseItem
 import com.example.githubrepoviewer.repos.data.local.RepoEntity
 import com.example.githubrepoviewer.repos.domain.models.RepoModel
 

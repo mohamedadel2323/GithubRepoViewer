@@ -1,4 +1,4 @@
-package com.example.githubrepoviewer.repos.data.dtos
+package com.example.githubrepoviewer.repos.data.dtos.repos
 
 data class Owner(
     val avatar_url: String?,

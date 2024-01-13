@@ -36,10 +36,15 @@ class RepoDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListeners()
+        observeScreenState()
+    }
+
+    private fun setListeners() {
         binding.issuesBtn.setOnClickListener {
             navController.navigate(RepoDetailsFragmentDirections.actionRepoDetailsFragmentToIssuesFragment(args.ownerName, args.repoName))
         }
-        observeScreenState()
+        binding.backButton.setOnClickListener { navController.navigateUp() }
     }
 
     private fun observeScreenState() {
@@ -54,6 +59,11 @@ class RepoDetailsFragment : Fragment() {
                 detailsViewModel.errorMessageShown()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

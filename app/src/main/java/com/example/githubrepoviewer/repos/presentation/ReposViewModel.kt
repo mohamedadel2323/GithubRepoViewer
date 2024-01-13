@@ -32,13 +32,11 @@ class ReposViewModel @Inject constructor(
     var repos = reposUseCase.getReposPagingData().cachedIn(viewModelScope)
         .map { pagingData -> pagingData.map { it.toRepoUiModel() } }
 
-    init {
-        getAllRepos()
-    }
+    init { getAllRepos() }
 
     private fun getAllRepos() {
         viewModelScope.launch(ioDispatcher) {
-            _reposState.update { it.copy(isReposLoading = true ) }
+            _reposState.update { it.copy(isReposLoading = true) }
             reposUseCase.getAllRepos().also { reposResource ->
                 when (reposResource) {
                     is Resource.Success -> {
@@ -51,9 +49,7 @@ class ReposViewModel @Inject constructor(
                     }
 
                     is Resource.Failure -> {
-                        _reposState.update {
-                            it.copy(errorMessage = reposResource.error ?: "", isReposLoading = false)
-                        }
+                        _reposState.update { it.copy(errorMessage = reposResource.error ?: "", isReposLoading = false) }
                     }
                 }
             }
@@ -65,15 +61,11 @@ class ReposViewModel @Inject constructor(
             _reposState.update { it.copy(isReposLoading = true) }
             when (val result = reposUseCase.getDetails(owner, repoName)) {
                 is Resource.Success -> {
-                    _reposState.update {
-                        it.copy(isReposLoading = false)
-                    }
+                    _reposState.update { it.copy(isReposLoading = false) }
                 }
 
                 is Resource.Failure -> {
-                    _reposState.update {
-                        it.copy(errorMessage = result.error.toString(), isReposLoading = false)
-                    }
+                    _reposState.update { it.copy(errorMessage = result.error.toString(), isReposLoading = false) }
                 }
             }
         }

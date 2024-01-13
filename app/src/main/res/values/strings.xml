@@ -22,4 +22,8 @@
     <string name="update_date">Update Date: </string>
     <string name="closed_date">Closed Date: </string>
     <string name="state">State: </string>
+    <string name="search_button">Search Button</string>
+    <string name="search_for_repository">Search For Repository</string>
+    <string name="search">Search</string>
+    <string name="back_button">backButton</string>
 </resources>

@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.githubrepoviewer.data.remote.details.RepoDetailsRemoteSource
-import com.example.githubrepoviewer.repos.data.dtos.ReposResponseItem
+import com.example.githubrepoviewer.repos.data.dtos.repos.ReposResponseItem
 import com.example.githubrepoviewer.repos.data.local.ReposLocalSource
 import com.example.githubrepoviewer.repos.data.mappers.toRepoEntity
 import com.example.githubrepoviewer.repos.data.mappers.toRepoModel

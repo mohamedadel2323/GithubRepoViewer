@@ -1,5 +1,6 @@
 package com.example.githubrepoviewer.repos.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,9 +12,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.githubrepoviewer.R
 import com.example.githubrepoviewer.databinding.FragmentReposBinding
+import com.example.githubrepoviewer.repos.presentation.models.RepoUiModel
+import com.example.githubrepoviewer.utils.NetworkConnectivityObserver
+import com.example.githubrepoviewer.utils.Status
+import com.example.githubrepoviewer.utils.collectLatestLifeCycleFlow
 import com.example.githubrepoviewer.utils.collectLifeCycleFlow
 import com.example.githubrepoviewer.utils.visibleIf
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReposFragment : Fragment() {
@@ -22,37 +29,57 @@ class ReposFragment : Fragment() {
     private val reposViewModel by viewModels<ReposViewModel>()
     private val navController by lazy { findNavController() }
     private lateinit var reposAdapter: ReposAdapter
+
+    @Inject
+    lateinit var networkConnectivityObserver: NetworkConnectivityObserver
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_repos, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setListeners()
         setReposRecycler()
         observeScreenState()
+        observeNetworkState()
+    }
+
+    private fun setListeners() {
+        binding.searchFab.setOnClickListener { navigateToSearchScreen() }
+    }
+
+    private fun observeNetworkState() {
+        collectLatestLifeCycleFlow(networkConnectivityObserver.observe()) {
+            delay(200)
+            binding.searchFab.visibleIf(it == Status.Available)
+        }
     }
 
     private fun setReposRecycler() {
         reposAdapter = ReposAdapter(
             {
-                navController.navigate(
-                    ReposFragmentDirections.actionReposFragmentToRepoDetailsFragment(
-                        it.repoOwner,
-                        it.repoName
-                    )
-                )
+                navigateToDetailsScreen(it)
             },
-            { repo ->
-                reposViewModel.updateRepo(repo.repoOwner, repo.repoName)
+            {
+                reposViewModel.updateRepo(it.repoOwner, it.repoName)
             }
         )
         binding.reposRv.adapter = reposAdapter.withLoadStateFooter(ReposLoadStateAdapter())
     }
 
+
+    private fun navigateToDetailsScreen(it: RepoUiModel) {
+        navController.navigate(ReposFragmentDirections.actionReposFragmentToRepoDetailsFragment(it.repoOwner, it.repoName))
+    }
+
+    private fun navigateToSearchScreen() {
+        navController.navigate(ReposFragmentDirections.actionReposFragmentToSearchFragment())
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun observeScreenState() {
         collectLifeCycleFlow(reposViewModel.reposState) { reposScreenState ->
             reposScreenState.repos?.let {
