@@ -11,6 +11,8 @@ interface ReposDao {
     suspend fun upsertAll(repos: List<RepoEntity>)
     @Query("SELECT * FROM repos_table")
     fun getAllRepos(): PagingSource<Int, RepoEntity>
+    @Query("SELECT * FROM repos_table")
+    suspend fun getRepos(): List<RepoEntity>
     @Query("UPDATE repos_table SET starCount = :currentStarCount WHERE id = :id")
     fun updateRepo(id: Int, currentStarCount: Int)
 }

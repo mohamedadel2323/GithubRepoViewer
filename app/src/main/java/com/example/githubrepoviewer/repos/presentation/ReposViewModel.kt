@@ -34,7 +34,7 @@ class ReposViewModel @Inject constructor(
 
     init { getAllRepos() }
 
-    private fun getAllRepos() {
+    fun getAllRepos() {
         viewModelScope.launch(ioDispatcher) {
             _reposState.update { it.copy(isReposLoading = true) }
             reposUseCase.getAllRepos().also { reposResource ->
